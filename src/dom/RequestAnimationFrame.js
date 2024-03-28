@@ -75,6 +75,8 @@ var RequestAnimationFrame = new Class({
 
         var _this = this;
 
+        var _fpsLasttime = 0;
+
         /**
          * The RAF step function.
          *
@@ -88,7 +90,12 @@ var RequestAnimationFrame = new Class({
          */
         this.step = function step (time)
         {
-            _this.callback(time);
+            var ts = +new Date();
+            if (ts - _fpsLasttime >= 14)
+            {
+                _fpsLasttime = ts;
+                _this.callback(time);
+            }
 
             if (_this.isRunning)
             {
