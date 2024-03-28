@@ -93,7 +93,6 @@ var RequestAnimationFrame = new Class({
             var ts = +new Date();
             if (ts - _fpsLasttime >= 32)
             {
-                console.log('TEST');
                 _fpsLasttime = ts;
                 _this.callback(time);
             }
