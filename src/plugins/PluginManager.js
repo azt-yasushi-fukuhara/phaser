@@ -1,6 +1,6 @@
 /**
  * @author       Richard Davey <rich@phaser.io>
- * @copyright    2013-2024 Phaser Studio Inc.
+ * @copyright    2013-2025 Phaser Studio Inc.
  * @license      {@link https://opensource.org/licenses/MIT|MIT License}
  */
 
@@ -13,6 +13,7 @@ var GameObjectFactory = require('../gameobjects/GameObjectFactory');
 var GetFastValue = require('../utils/object/GetFastValue');
 var PluginCache = require('./PluginCache');
 var Remove = require('../utils/array/Remove');
+var CONST = require('../const');
 
 /**
  * @classdesc
@@ -113,7 +114,7 @@ var PluginManager = new Class({
          */
         this._pendingScene = [];
 
-        if (game.isBooted)
+        if (game.isBooted || game.config.renderType === CONST.HEADLESS)
         {
             this.boot();
         }

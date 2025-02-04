@@ -1,6 +1,6 @@
 /**
  * @author       Richard Davey <rich@phaser.io>
- * @copyright    2013-2024 Phaser Studio Inc.
+ * @copyright    2013-2025 Phaser Studio Inc.
  * @license      {@link https://opensource.org/licenses/MIT|MIT License}
  */
 
@@ -431,12 +431,14 @@ var ScaleManager = new Class({
 
         this.fullscreen = game.device.fullscreen;
 
-        if ((this.scaleMode !== CONST.SCALE_MODE.RESIZE) && (this.scaleMode !== CONST.SCALE_MODE.EXPAND))
+        var scaleMode = this.scaleMode;
+
+        if (scaleMode !== CONST.SCALE_MODE.RESIZE && scaleMode !== CONST.SCALE_MODE.EXPAND)
         {
-            this.displaySize.setAspectMode(this.scaleMode);
+            this.displaySize.setAspectMode(scaleMode);
         }
 
-        if (this.scaleMode === CONST.SCALE_MODE.NONE)
+        if (scaleMode === CONST.SCALE_MODE.NONE)
         {
             this.resize(this.width, this.height);
         }
@@ -1104,18 +1106,16 @@ var ScaleManager = new Class({
             style.width = styleWidth + 'px';
             style.height = styleHeight + 'px';
 
-
             // Expand canvas size to fit game size's width or height
 
             var scaleX = this.parentSize.width / baseWidth;
-
             var scaleY = this.parentSize.height / baseHeight;
 
-            if (scaleX < scaleY)
+            if (scaleX < scaleY && scaleX !== 0)
             {
                 this.baseSize.setSize(baseWidth, this.parentSize.height / scaleX);
             }
-            else
+            else if (scaleY !== 0)
             {
                 this.baseSize.setSize(this.displaySize.width / scaleY, baseHeight);
             }
@@ -1224,6 +1224,11 @@ var ScaleManager = new Class({
         else if (autoCenter === CONST.CENTER.CENTER_VERTICALLY)
         {
             offsetX = 0;
+        }
+        else
+        {
+            offsetX = 0;
+            offsetY = 0;
         }
 
         style.marginLeft = offsetX + 'px';
