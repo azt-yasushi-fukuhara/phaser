@@ -481,9 +481,10 @@ var Camera = new Class({
     },
 
     /**
-     * Updates camera matrix. Also resets any active effects on this Camera (such as shake, flash and fade) and quickly clears them all.
+     * Internal preRender step.
      *
      * @method Phaser.Cameras.Scene2D.Camera#preRender
+     * @protected
      * @since 3.0.0
      */
     preRender: function ()

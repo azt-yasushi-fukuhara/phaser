@@ -65,7 +65,7 @@ var NumberTweenBuilder = function (parent, config, defaults)
     var easeParams = GetFastValue(config, 'easeParams', defaults.easeParams);
     var ease = GetFastValue(config, 'ease', defaults.ease);
 
-    var ops = GetValueOp('value', to);
+    var ops = GetFastValueOp('value', to);
 
     var tween = new Tween(parent, targets);
 

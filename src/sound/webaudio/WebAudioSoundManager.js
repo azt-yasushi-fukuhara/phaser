@@ -92,35 +92,6 @@ var WebAudioSoundManager = new Class({
                 game.events.once(GameEvents.BOOT, this.unlock, this);
             }
         }
-
-        game.events.on(GameEvents.VISIBLE, this.onGameVisible, this);
-    },
-
-    /**
-     * Internal handler for Phaser.Core.Events#VISIBLE.
-     * 
-     * Needed to handle resuming audio on iOS17/iOS18+ if you hide the browser, press
-     * the home button, etc. See https://github.com/phaserjs/phaser/issues/6829
-     *
-     * @method Phaser.Sound.WebAudioSoundManager#onGameVisible
-     * @private
-     * @since 3.88.0
-     */
-    onGameVisible: function ()
-    {
-        var context = this.context;
-
-        //  setTimeout to avoid weird audio artifacts (thanks Apple)
-        window.setTimeout(function ()
-        {
-
-            if (context)
-            {
-                context.suspend();
-                context.resume();
-            }
-
-        }, 100);
     },
 
     /**
@@ -430,12 +401,11 @@ var WebAudioSoundManager = new Class({
     {
         var listener = this.context.listener;
 
-        var x = GetFastValue(this.listenerPosition, 'x', null);
-        var y = GetFastValue(this.listenerPosition, 'y', null);
-
-
         if (listener && listener.positionX !== undefined)
         {
+            var x = GetFastValue(this.listenerPosition, 'x', null);
+            var y = GetFastValue(this.listenerPosition, 'y', null);
+
             if (x && x !== this._spatialx)
             {
                 this._spatialx = listener.positionX.value = x;
@@ -444,24 +414,6 @@ var WebAudioSoundManager = new Class({
             {
                 this._spatialy = listener.positionY.value = y;
             }
-        }
-
-        // Firefox doesn't currently implement positionX, positionY and positionZ properties on AudioListener,
-        // falling back on AudioListener.prototype.setPosition() method. @see https://developer.mozilla.org/en-US/docs/Web/API/AudioListener/setPosition
-        else if (listener)
-        {
-            if (x && x !== this._spatialx)
-            {
-                this._spatialx = x;
-            }
-            if (y && y !== this._spatialy)
-            {
-                this._spatialy = y;
-            }
-
-            var z = GetFastValue(listener, 'z', 0);
-
-            listener.setPosition(this._spatialx || 0, this._spatialy || 0, z);
         }
 
         BaseSoundManager.prototype.update.call(this, time, delta);
@@ -501,8 +453,6 @@ var WebAudioSoundManager = new Class({
                 _this.context = null;
             });
         }
-
-        this.game.events.off(GameEvents.VISIBLE, this.onGameVisible, this);
 
         BaseSoundManager.prototype.destroy.call(this);
     },

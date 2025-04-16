@@ -239,10 +239,7 @@ var DisplayList = new Class({
 
         while (i--)
         {
-            if (list[i])
-            {
-                list[i].destroy(true);
-            }
+            list[i].destroy(true);
         }
 
         list.length = 0;

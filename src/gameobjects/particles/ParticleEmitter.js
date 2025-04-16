@@ -17,7 +17,6 @@ var GameObject = require('../GameObject');
 var GetFastValue = require('../../utils/object/GetFastValue');
 var GetRandom = require('../../utils/array/GetRandom');
 var GravityWell = require('./GravityWell');
-var HasAll = require('../../utils/object/HasAll');
 var HasAny = require('../../utils/object/HasAny');
 var HasValue = require('../../utils/object/HasValue');
 var Inflate = require('../../geom/rectangle/Inflate');
@@ -979,7 +978,7 @@ var ParticleEmitter = new Class({
 
         this.acceleration = (this.accelerationX !== 0 || this.accelerationY !== 0);
 
-        this.moveTo = HasAll(config, [ 'moveToX', 'moveToY' ]);
+        this.moveTo = (this.moveToX !== 0 && this.moveToY !== 0);
 
         //  Special 'speed' override
 

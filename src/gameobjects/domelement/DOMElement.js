@@ -130,11 +130,6 @@ var DOMElement = new Class({
          */
         this.parent = scene.sys.game.domContainer;
 
-        if (!this.parent)
-        {
-            throw new Error('No DOM Container set in game config');
-        }
-
         /**
          * A reference to the HTML Cache.
          *
@@ -638,7 +633,10 @@ var DOMElement = new Class({
 
         target.phaser = this;
 
-        this.parent.appendChild(target);
+        if (this.parent)
+        {
+            this.parent.appendChild(target);
+        }
 
         //  InnerText
 
@@ -750,7 +748,10 @@ var DOMElement = new Class({
 
         element.phaser = this;
 
-        this.parent.appendChild(element);
+        if (this.parent)
+        {
+            this.parent.appendChild(element);
+        }
 
         element.innerHTML = html;
 
