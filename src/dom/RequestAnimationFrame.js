@@ -91,14 +91,12 @@ var RequestAnimationFrame = new Class({
         this.step = function step (time)
         {
             var ts = +new Date();
-            if (ts - _fpsLasttime >= 14)
-            {
+            if (ts - _fpsLasttime >= 14) {
                 _fpsLasttime = ts;
                 _this.callback(time);
             }
 
-            if (_this.isRunning)
-            {
+            if (_this.isRunning) {
                 _this.timeOutID = window.requestAnimationFrame(step);
             }
         };
